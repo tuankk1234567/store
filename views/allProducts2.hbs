@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Store in Ho Chi Minh</title>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="col-sm-9">
-     <form action="/doSearchProducts" method="post">
+     <form action="/doSearchProducts2" method="post">
         Name <input type="text" name="txtName" id="">
         <input type="submit" value="Search">
     </form>
@@ -61,26 +61,26 @@
     <table class="table bordered">
         <thead>
              <tr>
-              <th>ID Product</th>
+              <th>Id Products</th>
               <th>Name</th>
-              <th>Size</th>  
+              <th>Size</th>
               <th>Price</th>
               <th>Amount</th>
+              <th>Delete</th>
+              <th>Update</th>
             </tr>
         </thead>
-<form action="/doupdate" method="post">
         {{#each model}}
         <tr>
-            <td><input type="text" value= "{{_id}}" name = "txtId" id=""></td>
-            <td><input type="text" value= "{{name}}" name = "txtName" id=""></td>
-            <td><input type="text" value= "{{size}}" name = "txtSize" id="" ></td>
-            <td><input type="text" value= "{{price}}" name = "txtPrice" id=""></td>
-            <td><input type="text" value= "{{amount}}" name = "txtAmount" id=""></td>
-            <td><input type="submit" value="Update"></td>
-        </tr>      
+            <td>{{_id}} </td>
+            <td>{{name}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+            <td>{{amount}}</td>
+            <td><a href="/delete2?id={{_id}}">Delete</a></td>
+            <td><a href="/update2?id={{_id}} ">Update</a></td>
+        </tr>
         {{/each}}
- </form>
-        
     </table>
       <br><br>
       
@@ -94,4 +94,4 @@
 </footer>
 
 </body>
-</html> 
+</html>

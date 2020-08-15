@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+  <title>Dragonball store</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 2100px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
 </head>
 <body>
-    <center>
-	<form style="width: fit-content; margin-top: 10px;border:1px solid #000;" action="" method="POST">
-		<input type="text" name="UserName" placeholder="UserName" required=""> <br> <br>
-		<input type="password" name="UserPassWord" placeholder="Password" required=""> <br> <br>
-		<input type="submit" id="inp_login" value="Login">
-	</form>
-	
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4>Dragonball store</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="">Home</a></li>
+        <li><a href="/products">Store in Ha Noi</a></li>
+        <li><a href="/products2">Store in Ho Chi Minh</a></li>
+      </ul><br>
     </div>
-</center>
+
+    <div class="col-sm-9">
+      <div style="background-color:#9393ec ; padding-top: 10px;padding-right: 30px; padding-bottom: 10px;padding-left: 80px;"><h2 style="color: black; margin-right: 150px; margin-left: 350px;">Customer is god</h4></div>
+      <hr>
+      <h2 style="color: black; margin-right: 150px; margin-left: 500px;">Goku</h2>
+      <img src="/images/goku.jpg" alt="Goku" style="width:528px;height:528px;margin-top: 10px; margin-bottom: 10px; margin-right: 150px; margin-left: 300px;">
+      <br><br>
+      
+      <hr>
+      <h2 style="color: black; margin-right: 150px; margin-left: 500px;">Vegeta</h2>
+     <img src="/images/vegeta.jpg" alt=""style="width:528px;height:528px;margin-top: 10px; margin-bottom: 10px; margin-right: 150px; margin-left: 300px;">
+      <hr>
+
+      <hr>
+      <h2 style="color: black; margin-right: 150px; margin-left: 500px;">Gohan</h2>
+      <img src="/images/gohan.jpg" alt="" style="width:528px;height:528px;margin-top: 10px; margin-bottom: 10px; margin-right: 150px; margin-left: 300px;">
+      <hr>
+      <br><br>
+      
+      
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid">
+  <p style="margin-top: 10px; margin-bottom: 10px; margin-right: 150px; margin-left: 600px;">© 2020 Copyright:Dragonall store</p>
+</footer>
+
 </body>
 </html>

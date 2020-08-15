@@ -22,60 +22,133 @@ app.set('view engine','hbs');
 app.get('/',(req,res)=>{
     res.render('index');
 })
-app.get('/products',async function(req,res){
+
+ app.get('/products',async function(req,res){
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     let results = await dbo.collection("products").find({}).toArray();
+     res.render('allProducts',{model:results});
+ })
+
+app.get('/products2',async function(req,res){
     let client= await MongoClient.connect(url);
     let dbo = client.db("mystore");
-    let results = await dbo.collection("products").find({}).toArray();
-    res.render('allProducts',{model:results});
+    let results = await dbo.collection("products2").find({}).toArray();
+    res.render('allProducts2',{model:results});
+})
+ app.get('/insertProducts',(req,res)=>{
+     res.render('insertProducts');
+ })
+
+ app.post('/doInsertProducts',async (req,res)=>{
+    let inputName = req.body.txtName;
+     let inputSize = req.body.txtSize;
+     let inputPrice = req.body.txtPrice;
+     let inputAmount = req.body.txtAmount;
+     let newProducts = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     await dbo.collection("products").insertOne(newProducts);
+     res.redirect('/products');
+ })
+
+app.get('/insertProducts2',(req,res)=>{
+    res.render('insertProducts2');
 })
 
-app.get('/insertProducts',(req,res)=>{
-    res.render('insertProducts');
-})
-
-app.post('/doInsertProducts',async (req,res)=>{
+app.post('/doInsertProducts2',async (req,res)=>{
     let inputName = req.body.txtName;
     let inputSize = req.body.txtSize;
     let inputPrice = req.body.txtPrice;
     let inputAmount = req.body.txtAmount;
-    let newProducts = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
+    let newProducts2 = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
     let client= await MongoClient.connect(url);
     let dbo = client.db("mystore");
-    await dbo.collection("products").insertOne(newProducts);
-    res.redirect('/products');
+    await dbo.collection("products2").insertOne(newProducts2);
+    res.redirect('/products2');
 })
 
-app.get('/delete',async (req,res)=>{
+
+ app.get('/delete',async (req,res)=>{
+     let inputId = req.query.id;
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     var ObjectID = require('mongodb').ObjectID;
+     let condition = {"_id" : ObjectID(inputId)};
+     await dbo.collection("products").deleteOne(condition);
+     res.redirect('/products');
+
+ })
+
+app.get('/delete2',async (req,res)=>{
     let inputId = req.query.id;
     let client= await MongoClient.connect(url);
     let dbo = client.db("mystore");
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
-    await dbo.collection("products").deleteOne(condition);
-    res.redirect('/products');
+    await dbo.collection("products2").deleteOne(condition);
+    res.redirect('/products2');
 
 })
-app.post('/doSearchProducts',async (req,res)=>{
+
+ app.post('/doSearchProducts',async (req,res)=>{
+     let inputName = req.body.txtName;
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     let results = await dbo.collection("products").find({name: new RegExp(inputName,'i')}).toArray();
+    
+     res.render('allProducts',{model:results});
+
+ })
+
+app.post('/doSearchProducts2',async (req,res)=>{
     let inputName = req.body.txtName;
     let client= await MongoClient.connect(url);
     let dbo = client.db("mystore");
-    let results = await dbo.collection("products").find({name: new RegExp(inputName,'i')}).toArray();
+    let results = await dbo.collection("products2").find({name: new RegExp(inputName,'i')}).toArray();
     
-    res.render('allProducts',{model:results});
+    res.render('allProducts2',{model:results});
 
 })
 
-app.get('/update',async function(req,res){
+ app.get('/update',async function(req,res){
+     let inputId = req.query.id;
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     var ObjectID = require('mongodb').ObjectID;
+     let condition = {"_id" : ObjectID(inputId)};
+     let results = await dbo.collection("products").find(condition).toArray();
+     res.render('update',{model:results});
+ })
+
+ app.post('/doupdate',async (req,res)=>{
+     let inputId = req.body.txtId;
+     let inputName = req.body.txtName;
+     let inputSize = req.body.txtSize;
+     let inputPrice = req.body.txtPrice;
+     let inputAmount = req.body.txtAmount;
+     let Change = {$set:{name : inputName , size : inputSize , price :inputPrice,amount : inputAmount}};
+    let client= await MongoClient.connect(url);
+     var ObjectID = require('mongodb').ObjectID;
+     let condition = {"_id" : ObjectID(inputId)};
+     let dbo = client.db("mystore"); 
+     await dbo.collection("products").updateMany(condition,Change);
+     res.redirect('/products');
+ })  
+
+
+
+app.get('/update2',async function(req,res){
     let inputId = req.query.id;
     let client= await MongoClient.connect(url);
     let dbo = client.db("mystore");
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
-    let results = await dbo.collection("products").find(condition).toArray();
-    res.render('update',{model:results});
+    let results = await dbo.collection("products2").find(condition).toArray();
+    res.render('update2',{model:results});
 })
 
-app.post('/doupdate',async (req,res)=>{
+app.post('/doupdate2',async (req,res)=>{
     let inputId = req.body.txtId;
     let inputName = req.body.txtName;
     let inputSize = req.body.txtSize;
@@ -86,6 +159,6 @@ app.post('/doupdate',async (req,res)=>{
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
     let dbo = client.db("mystore"); 
-    await dbo.collection("products").updateMany(condition,Change);
-    res.redirect('/products');
+    await dbo.collection("products2").updateMany(condition,Change);
+    res.redirect('/products2');
 })  
