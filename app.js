@@ -132,7 +132,7 @@ app.post('/doSearchProducts2',async (req,res)=>{
      var ObjectID = require('mongodb').ObjectID;
      let condition = {"_id" : ObjectID(inputId)};
      let dbo = client.db("mystore"); 
-     await dbo.collection("products").updateMany(condition,Change);
+     await dbo.collection("products").updateOne(condition,Change);
      res.redirect('/products');
  })  
 
@@ -159,6 +159,6 @@ app.post('/doupdate2',async (req,res)=>{
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
     let dbo = client.db("mystore"); 
-    await dbo.collection("products2").updateMany(condition,Change);
+    await dbo.collection("products2").updateOne(condition,Change);
     res.redirect('/products2');
 })  
