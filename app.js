@@ -2,9 +2,6 @@ const express = require('express');
 const engines = require('consolidate');
 const app = express();
 
-const PORT = process.env.PORT || 5000;
-var server=app.listen(PORT,function() {});
-
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -162,3 +159,6 @@ app.post('/doupdate2',async (req,res)=>{
     await dbo.collection("products2").updateOne(condition,Change);
     res.redirect('/products2');
 })  
+
+const PORT = process.env.PORT || 5000;
+var server=app.listen(PORT,function() {});
