@@ -52,14 +52,20 @@
 
     <div style="margin-top: 50px; margin-bottom: auto; margin-right: 150px; margin-left: 800px;">
      <form action="/doInsertProducts" method="post">
-        Name <input type="text" name="txtName" id="" style="margin-left:10px">
+        Id <input type="text" name="txtId" id="" style="margin-left:35px" >
+         <label for style="color: brown;">{{model.idError}}</label>
         <br>
-        Size <input type="text" name="txtSize" id="" style="margin-left:20px">
+        Name <input type="text" name="txtName" id="" style="margin-left:10px" >
+        <label for style="color: brown;">{{model.nameError}}</label>
+        <br>
+        Size <input type="text" name="txtSize" id="" style="margin-left:20px" >
+         <label for style="color: brown;">{{model.sizeError}}</label>
         <br>    
-        Price <input type="text" name="txtPrice" id="" style="margin-left:16px">
+        Price <input type="text" name="txtPrice" id="" style="margin-left:16px" >
+         <label for style="color: brown;">{{model.priceError}}</label>
         <br>
-        Amount <input type="text" name="txtAmount" id="" style="margin-left:0px">
-        <label for style="color: brown;">{{model.amount}}</label>
+        Amount <input type="text" name="txtAmount" id="" style="margin-left:0px" >
+        <label for style="color: brown;">{{model.amountError}}</label>
         <br>
         <input type="submit" value="Insert" style="margin-left:120px">
     </form>

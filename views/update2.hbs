@@ -71,7 +71,8 @@
 <form action="/doupdate2" method="post">
         {{#each model}}
         <tr>
-            <td><input type="text" value= "{{_id}}" name = "txtId" id=""></td>
+            <input type="hidden" name="id" value="{{_id}}">
+            <td><input type="text" value= "{{id_product}}" name = "txtId" id=""></td>
             <td><input type="text" value= "{{name}}" name = "txtName" id=""></td>
             <td><input type="text" value= "{{size}}" name = "txtSize" id="" ></td>
             <td><input type="text" value= "{{price}}" name = "txtPrice" id=""></td>

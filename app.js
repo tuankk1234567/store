@@ -35,18 +35,33 @@ app.get('/products2',async function(req,res){
 })
  app.get('/insertProducts',(req,res)=>{
      res.render('insertProducts');
- })
+ }) 
 
- app.post('/doInsertProducts',async (req,res)=>{
+ app.post('/doInsertProducts1',async (req,res)=>{
+    let inputId = req.body.txtId;
     let inputName = req.body.txtName;
      let inputSize = req.body.txtSize;
      let inputPrice = req.body.txtPrice;
      let inputAmount = req.body.txtAmount;
-     let newProducts = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
+     let newProducts = { id_product:inputId, name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
+     if(inputName.trim().length ==0){
+        let modelError ={
+                idError:"You have not entered a id!",
+                nameError:"You have not entered a Name!",
+                sizeError:"You have not entered a Size",
+                priceError:"You have not entered a Price",
+                amountError:"You have not entered a Amount",
+            };
+        res.render('insertProducts',{model:modelError});
+    }else if(isNaN(inputAmount)){
+            let modelError1 =  {amountError:"Only enter number" };
+            res.render('insertProducts',{model:modelError1});
+        }else{
      let client= await MongoClient.connect(url);
      let dbo = client.db("mystore");
      await dbo.collection("products").insertOne(newProducts);
      res.redirect('/products');
+    }
  })
 
 app.get('/insertProducts2',(req,res)=>{
@@ -54,16 +69,31 @@ app.get('/insertProducts2',(req,res)=>{
 })
 
 app.post('/doInsertProducts2',async (req,res)=>{
+    let inputId = req.body.txtId;
     let inputName = req.body.txtName;
-    let inputSize = req.body.txtSize;
-    let inputPrice = req.body.txtPrice;
-    let inputAmount = req.body.txtAmount;
-    let newProducts2 = { name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
-    let client= await MongoClient.connect(url);
-    let dbo = client.db("mystore");
-    await dbo.collection("products2").insertOne(newProducts2);
-    res.redirect('/products2');
-})
+     let inputSize = req.body.txtSize;
+     let inputPrice = req.body.txtPrice;
+     let inputAmount = req.body.txtAmount;
+     let newProducts = { id_product:inputId, name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
+     if(inputName.trim().length ==0){
+        let modelError ={
+                idError:"You have not entered a id!",
+                nameError:"You have not entered a Name!",
+                sizeError:"You have not entered a Size",
+                priceError:"You have not entered a Price",
+                amountError:"You have not entered a Amount",
+            };
+        res.render('insertProducts',{model:modelError});
+    }else if(isNaN(inputAmount)){
+            let modelError1 =  {amountError:"Only enter number" };
+            res.render('insertProducts',{model:modelError1});
+        }else{
+     let client= await MongoClient.connect(url);
+     let dbo = client.db("mystore");
+     await dbo.collection("products2").insertOne(newProducts);
+     res.redirect('/products2');
+    }
+ })
 
 
  app.get('/delete',async (req,res)=>{
@@ -84,7 +114,7 @@ app.get('/delete2',async (req,res)=>{
     var ObjectID = require('mongodb').ObjectID;
     let condition = {"_id" : ObjectID(inputId)};
     await dbo.collection("products2").deleteOne(condition);
-    res.redirect('/products2');
+    res.redirect('/products2');     
 
 })
 
@@ -108,30 +138,31 @@ app.post('/doSearchProducts2',async (req,res)=>{
 
 })
 
- app.get('/update',async function(req,res){
-     let inputId = req.query.id;
-     let client= await MongoClient.connect(url);
-     let dbo = client.db("mystore");
-     var ObjectID = require('mongodb').ObjectID;
-     let condition = {"_id" : ObjectID(inputId)};
-     let results = await dbo.collection("products").find(condition).toArray();
-     res.render('update',{model:results});
- })
+app.get('/update',async function(req,res){
+    let inputId = req.query.id;
+    let client= await MongoClient.connect(url);
+    let dbo = client.db("mystore");
+    var ObjectID = require('mongodb').ObjectID;
+    let condition = {"_id" : ObjectID(inputId)};
+    let results = await dbo.collection("products").find(condition).toArray();
+    res.render('update',{model:results});
+})
 
  app.post('/doupdate',async (req,res)=>{
-     let inputId = req.body.txtId;
-     let inputName = req.body.txtName;
-     let inputSize = req.body.txtSize;
-     let inputPrice = req.body.txtPrice;
-     let inputAmount = req.body.txtAmount;
-     let Change = {$set:{name : inputName , size : inputSize , price :inputPrice,amount : inputAmount}};
-    let client= await MongoClient.connect(url);
-     var ObjectID = require('mongodb').ObjectID;
-     let condition = {"_id" : ObjectID(inputId)};
-     let dbo = client.db("mystore"); 
-     await dbo.collection("products").updateOne(condition,Change);
-     res.redirect('/products');
- })  
+    let inputId = req.body.id;
+    let inputId1 = req.body.txtId;
+    let inputName = req.body.txtName;
+    let inputSize = req.body.txtSize;
+    let inputPrice = req.body.txtPrice;
+    let inputAmount = req.body.txtAmount;
+    let Change = {$set:{id_product:inputId1, name : inputName , size : inputSize , price : inputPrice , amount : inputAmount }};
+        let client= await MongoClient.connect(url);
+        var ObjectID = require('mongodb').ObjectID;
+        let dbo = client.db("mystore"); 
+        await dbo.collection("products").updateOne({_id : ObjectID(inputId)},Change);
+        res.redirect('/products');
+
+})
 
 
 
@@ -146,18 +177,19 @@ app.get('/update2',async function(req,res){
 })
 
 app.post('/doupdate2',async (req,res)=>{
-    let inputId = req.body.txtId;
+    let inputId = req.body.id;
+    let inputId1 = req.body.txtId;
     let inputName = req.body.txtName;
     let inputSize = req.body.txtSize;
     let inputPrice = req.body.txtPrice;
     let inputAmount = req.body.txtAmount;
-    let Change = {$set:{name : inputName , size : inputSize , price :inputPrice,amount : inputAmount}};
-    let client= await MongoClient.connect(url);
-    var ObjectID = require('mongodb').ObjectID;
-    let condition = {"_id" : ObjectID(inputId)};
-    let dbo = client.db("mystore"); 
-    await dbo.collection("products2").updateOne(condition,Change);
-    res.redirect('/products2');
+    let Change = {$set:{id_product:inputId1, name : inputName , size : inputSize , price : inputPrice , amount : inputAmount }};
+        let client= await MongoClient.connect(url);
+        var ObjectID = require('mongodb').ObjectID;
+        let dbo = client.db("mystore"); 
+        await dbo.collection("products2").updateOne({_id : ObjectID(inputId)},Change);
+        res.redirect('/products2');
+
 })  
 
 const PORT = process.env.PORT || 5000;
