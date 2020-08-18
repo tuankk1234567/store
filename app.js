@@ -37,7 +37,7 @@ app.get('/products2',async function(req,res){
      res.render('insertProducts');
  }) 
 
- app.post('/doInsertProducts1',async (req,res)=>{
+ app.post('/doInsertProducts',async (req,res)=>{
     let inputId = req.body.txtId;
     let inputName = req.body.txtName;
      let inputSize = req.body.txtSize;
