@@ -77,15 +77,15 @@ app.post('/doInsertProducts2',async (req,res)=>{
      let newProducts = { id_product:inputId, name : inputName , size : inputSize , price :inputPrice,amount : inputAmount};
      if(inputName.trim().length ==0){
         let modelError ={
-                idError:"You have not entered a id!",
-                nameError:"You have not entered a Name!",
-                sizeError:"You have not entered a Size",
-                priceError:"You have not entered a Price",
-                amountError:"You have not entered a Amount",
+                idError:"You must enter id!",
+                nameError:"You must enter Name!",
+                sizeError:"You must enter Size",
+                priceError:"You must enter Price",
+                amountError:"You must enter Amount",
             };
         res.render('insertProducts',{model:modelError});
     }else if(isNaN(inputAmount)){
-            let modelError1 =  {amountError:"Only enter number" };
+            let modelError1 =  {amountError:"Enter number" };
             res.render('insertProducts',{model:modelError1});
         }else{
      let client= await MongoClient.connect(url);
